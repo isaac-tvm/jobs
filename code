@@ -1,0 +1,105 @@
+import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+# =========================
+# CONFIGURACIÓN Y CARGA
+# =========================
+archivo = r'C:\Users\LENOVO\Desktop\job_salary_prediction_dataset.xlsx'
+
+df = pd.read_excel(archivo, header=0)
+
+# Limpieza de columnas
+df.columns = df.columns.str.strip().str.lower().str.replace(' ', '_')
+
+# =========================
+# GRÁFICAS
+# =========================
+
+# 1. Boxplot: remoto vs híbrido vs presencial
+plt.figure(figsize=(15, 8))
+sns.boxplot(
+    data=df, 
+    x='experience_years', 
+    y='salary', 
+    hue='remote_work',
+    palette="Set2", 
+    showfliers=False
+)
+plt.title("¿Quién gana más? Remoto, Híbrido o Presencial", fontsize=16)
+plt.legend(title="Modalidad")
+plt.show()
+
+
+
+# 3. Heatmap por carrera
+resumen = df.groupby(['job_title', 'experience_years']).size().unstack(fill_value=0)
+
+top_carreras = resumen.sum(axis=1).sort_values(ascending=False).head(20).index
+resumen_top = resumen.loc[top_carreras]
+
+plt.figure(figsize=(12, 8))
+sns.heatmap(resumen_top, cmap="YlGnBu")
+plt.title("¿Dónde se concentran los años de experiencia por carrera?")
+plt.xlabel("Años de Experiencia")
+plt.ylabel("Carrera")
+plt.show()
+
+
+# 4. Regresión experiencia vs salario
+plt.figure(figsize=(10, 6))
+sns.regplot(
+    data=df.sample(1000), 
+    x='experience_years', 
+    y='salary',
+    scatter_kws={'alpha': 0.3}, 
+    line_kws={'color': 'red'}
+)
+plt.title("Relación: Años de Experiencia vs Salario")
+plt.show()
+
+
+# 5. Heatmap por industria
+resumen_ind = df.groupby(['industry', 'experience_years']).size().unstack(fill_value=0)
+
+plt.figure(figsize=(12, 8))
+sns.heatmap(resumen_ind, cmap="YlGnBu")
+plt.title("Concentración de Experiencia por Industria")
+plt.show()
+
+
+# 6. Salario por educación (otra vista)
+sns.violinplot(
+    data=df,
+    x='education_level',
+    y='salary',
+    hue='education_level',
+    palette="muted",
+    legend=False
+)
+plt.title("¿Vale la pena estudiar más? Salario por Nivel Educativo")
+plt.show()
+
+
+# 7. Barplot de salario máximo por industria
+plt.figure(figsize=(12, 10))
+
+orden_max = df.groupby('industry')['salary'].max().sort_values(ascending=False).index
+
+sns.barplot(
+    data=df, 
+    x='salary', 
+    y='industry', 
+    hue='industry',
+    order=orden_max, 
+    estimator='max',
+    palette="magma", 
+    legend=False
+)
+
+plt.title("¿Cuál es el techo salarial por industria? (MÁXIMOS)", fontsize=16, fontweight='bold')
+plt.xlabel("Salario Máximo Detectado ($)")
+plt.ylabel("Industria")
+plt.grid(axis='x', linestyle='--', alpha=0.3)
+plt.tight_layout()
+plt.show()
