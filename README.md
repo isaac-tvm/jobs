@@ -1,5 +1,4 @@
-# jobs
-Job Salary Analysis: 250k Insights with Python
+# Job Salary Analysis: 250k Insights with Python
 A Data-Driven Exploration of Modern Labor Markets and Compensation Trends
 
 Overview
