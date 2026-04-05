@@ -97,6 +97,6 @@ The Government Surprise: Government and Technology tie for the second-highest ce
 
 Media & Finance Floors: Interestingly, Media and Finance—industries often perceived as high-paying—show slightly lower maximums in this dataset compared to Consulting. This suggests that while they are stable, their "growth cap" is reached sooner.
 
-Strategic Career Mapping: For a professional, Figure 7 is much more valuable than Figure 1. It proves that if your goal is wealth maximization, you shouldn't look at the average; you should look at the industry's ceiling.
+Strategic Career Mapping: For a professional, Figure 6 is much more valuable than Figure 1. It proves that if your goal is wealth maximization, you shouldn't look at the average; you should look at the industry's ceiling.
 
 
